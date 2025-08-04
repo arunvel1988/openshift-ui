@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>🔧 Manage Ansible Roles</title>
+    <style>
+        body {
+            font-family: monospace;
+            background: #f9f9f9;
+            padding: 2rem;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        form {
+            margin-bottom: 1.5rem;
+        }
+        input[type="text"] {
+            padding: 10px;
+            font-size: 1rem;
+            width: 300px;
+            margin-right: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px 5px 5px 0;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        pre {
+            background: #eee;
+            padding: 1rem;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .section {
+            margin-bottom: 2rem;
+        }
+        .back-links {
+            margin-top: 2rem;
+        }
+        .back-links a {
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+            margin-right: 20px;
+        }
+        .back-links a:hover {
+            text-decoration: underline;
+        }
+        .message {
+            padding: 10px;
+            background-color: #d1ecf1;
+            border: 1px solid #bee5eb;
+            border-radius: 5px;
+            color: #0c5460;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🔧 Manage Ansible Roles</h1>
+
+    <form method="post">
+        <input type="text" name="role_name" placeholder="Enter role name (e.g., nginx or myrole)" required>
+
+        <div>
+            <button name="create_role" type="submit">📁 Create Custom Role</button>
+            <button name="install_role" type="submit">🌐 Install Role from Galaxy</button>
+            <button name="show_readme" type="submit">📖 View Role README</button>
+            <button name="run_role" type="submit">🚀 Run Role</button>
+            <button name="show_tree" type="submit">📂 Show Roles Directory Tree</button>
+        </div>
+    </form>
+
+    {% if message %}
+        <div class="message">{{ message }}</div>
+    {% endif %}
+
+    {% if dir_tree %}
+    <div class="section">
+        <h2>📁 Directory Tree</h2>
+        <pre>{{ dir_tree }}</pre>
+    </div>
+    {% endif %}
+
+    {% if readme %}
+    <div class="section">
+        <h2>📝 README</h2>
+        <pre>{{ readme }}</pre>
+    </div>
+    {% endif %}
+
+    {% if output %}
+    <div class="section">
+        <h2>📤 Playbook Output</h2>
+        <pre>{{ output }}</pre>
+    </div>
+    {% endif %}
+
+    <div class="back-links">
+        <a href="/ansible/local/playbooks">← Back to Ansible Playbooks</a>
+        <a href="https://galaxy.ansible.com/ui/" target="_blank">← Ansible Galaxy UI</a>
+        <a href="/">🏠 Home</a>
+    </div>
+
+</body>
+</html>

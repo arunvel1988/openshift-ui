@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Terraform Azure Provider Guide</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f8fafc;
+            padding: 40px;
+            color: #1a202c;
+        }
+        h1 {
+            color: #2c5282;
+        }
+        h2 {
+            color: #2b6cb0;
+            margin-top: 30px;
+        }
+        p {
+            margin-bottom: 20px;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        a {
+            color: #2b6cb0;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .card {
+            background: #edf2f7;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>☁️ Terraform Azure Provider</h1>
+
+    <div class="card">
+        <p><strong>What is the Azure Provider?</strong></p>
+        <p>The Azure Provider is the official Terraform plugin used to manage resources on Microsoft Azure. It enables provisioning and management of a broad set of Azure services like Virtual Machines, Storage Accounts, AKS, VNets, and more.</p>
+
+        <p><strong>Use Cases:</strong></p>
+        <ul>
+            <li>Automate infrastructure provisioning on Azure</li>
+            <li>Define and manage cloud architecture as code</li>
+            <li>Secure and govern Azure resources programmatically</li>
+        </ul>
+
+        <p><strong>Popular Resource Types:</strong></p>
+        <ul>
+            <li><code>azurerm_virtual_machine</code> – Deploy and manage Azure VMs</li>
+            <li><code>azurerm_storage_account</code> – Create and manage Azure Storage Accounts</li>
+            <li><code>azurerm_kubernetes_cluster</code> – Provision AKS clusters</li>
+            <li><code>azurerm_virtual_network</code> – Configure VNets and subnets</li>
+            <li><code>azurerm_resource_group</code> – Create logical groupings of Azure resources</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>🔗 Useful Links</h2>
+        <ul>
+            <li><a href="https://registry.terraform.io/providers/hashicorp/azurerm/latest" target="_blank">📦 Azure Provider on Terraform Registry</a></li>
+            <li><a href="https://registry.terraform.io/browse/providers" target="_blank">🔍 Browse All Providers</a></li>
+            <li><a href="https://github.com/hashicorp/terraform-provider-azurerm" target="_blank">💻 GitHub Repo – terraform-provider-azurerm</a></li>
+            <li><a href="https://developer.hashicorp.com/terraform/language/providers/configuration" target="_blank">⚙️ Provider Configuration Guide</a></li>
+            <li><a href="/terraform/azure/tutorials">← Terraform Azure Tutorials</a></li>
+            <li><a href="/terraform/azure">← Back to Terraform Azure Home</a></li>
+            <li><a href="/terraform">← Back to Terraform Home</a></li>
+        </ul>
+    </div>
+
+</body>
+</html>

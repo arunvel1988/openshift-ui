@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>OpenShift Playground</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #e3f2fd, #e8eaf6);
+      color: #333;
+      padding: 50px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background-color: #ffffff;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease-in-out;
+    }
+
+    .container:hover {
+      transform: scale(1.01);
+    }
+
+    h1 {
+      color: #d32f2f;
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+
+    h1 span {
+      font-size: 2.8rem;
+    }
+
+    p {
+      font-size: 1.2rem;
+      line-height: 1.7;
+    }
+
+    ul {
+      margin-top: 20px;
+      padding-left: 20px;
+    }
+
+    ul li {
+      margin-bottom: 12px;
+      font-size: 1.1rem;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 14px 30px;
+      font-size: 1.1rem;
+      background: linear-gradient(to right, #ef5350, #d32f2f);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      transition: background 0.3s ease;
+    }
+
+    .btn:hover {
+      background: linear-gradient(to right, #d32f2f, #b71c1c);
+    }
+
+    .link-docs {
+      display: inline-block;
+      margin-top: 20px;
+      color: #d32f2f;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .link-docs:hover {
+      text-decoration: underline;
+    }
+
+    .emoji {
+      font-size: 1.4rem;
+    }
+
+    footer {
+      margin-top: 40px;
+      font-size: 0.9rem;
+      color: #666;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1><span>☸️</span> OpenShift Playground</h1>
+    <p>Welcome to your hands-on <strong>OpenShift lab environment</strong>! This local playground helps you:</p>
+
+    <ul>
+      <li>📦 Deploy applications using <strong>oc new-app</strong> and YAML manifests</li>
+      <li>⚙️ Automate builds using <strong>BuildConfigs</strong> and webhooks</li>
+      <li>🔐 Manage <strong>users, roles, SCCs, and secrets</strong> securely</li>
+      <li>📈 Monitor with <strong>Prometheus, Grafana, and Logging</strong></li>
+      <li>📅 Schedule workloads using <strong>CronJobs</strong> and Operators</li>
+      <li>🛠️ Learn <strong>GitOps, Backups, and Operator upgrades</strong></li>
+    </ul>
+
+    <a class="link-docs" href="https://docs.openshift.com" target="_blank">📖 OpenShift Official Documentation</a><br>
+
+    <a class="btn" href="/pre-req">🔧 Check Cluster Prerequisites</a>
+  </div>
+
+  <footer>
+    Built for OpenShift learners 
+  </footer>
+</body>
+</html>
+

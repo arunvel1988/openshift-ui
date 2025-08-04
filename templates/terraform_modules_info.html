@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Terraform Modules Guide</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f8fafc;
+            padding: 40px;
+            color: #1a202c;
+        }
+        h1 {
+            color: #2c5282;
+        }
+        h2 {
+            color: #2b6cb0;
+            margin-top: 30px;
+        }
+        p {
+            margin-bottom: 20px;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        a {
+            color: #2b6cb0;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .card {
+            background: #edf2f7;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>📦 Terraform Modules</h1>
+
+    <div class="card">
+        <p><strong>What are Terraform Modules?</strong></p>
+        <p>Terraform Modules are reusable units of infrastructure-as-code. They help you organize and reuse configurations by grouping related resources together.</p>
+
+        <p><strong>Use Cases:</strong></p>
+        <ul>
+            <li>Encapsulate reusable infrastructure patterns</li>
+            <li>Standardize deployments across environments</li>
+            <li>Promote best practices and DRY (Don’t Repeat Yourself) principles</li>
+        </ul>
+
+        <p><strong>Common Module Types:</strong></p>
+        <ul>
+            <li><code>vpc</code> – Define networking and subnets</li>
+            <li><code>ec2_instance</code> – Launch reusable EC2 modules</li>
+            <li><code>s3_bucket</code> – Create compliant S3 buckets</li>
+            <li><code>iam_roles</code> – Manage standardized IAM roles</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>🔗 Useful Links</h2>
+        <ul>
+            <li><a href="https://registry.terraform.io/modules" target="_blank">📚 Terraform Module Registry</a></li>
+            <li><a href="https://developer.hashicorp.com/terraform/language/modules" target="_blank">📖 Terraform Module Docs</a></li>
+            <li><a href="https://github.com/terraform-aws-modules" target="_blank">🌍 GitHub – terraform-aws-modules</a></li>
+            <li><a href="https://github.com/Azure/terraform-azure-modules" target="_blank">🌐 GitHub – terraform-azurerm-modules</a></li>
+            <li><a href="https://github.com/terraform-google-modules" target="_blank">🌎 GitHub – terraform-google-modules</a></li>
+            <li><a href="/terraform/modules/tutorials">←  Terraform Modules</a></li>            
+            <li><a href="/terraform">← Back to Terraform Home</a></li>
+        </ul>
+    </div>
+
+</body>
+</html>

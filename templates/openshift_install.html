@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>OpenShift CRC Installation</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background-color: #fce4ec;
+            padding: 50px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #d81b60;
+            font-size: 2.2em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h1::before {
+            content: "🔧";
+            font-size: 1.2em;
+        }
+
+        p {
+            font-size: 1.1em;
+            margin-bottom: 20px;
+        }
+
+        .highlight {
+            background: #f8bbd0;
+            padding: 5px 10px;
+            border-radius: 5px;
+            color: #880e4f;
+            font-weight: bold;
+        }
+
+        pre {
+            background: #f5f7fa;
+            padding: 20px;
+            border-left: 6px solid #d81b60;
+            border-radius: 10px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+
+        .btn-group {
+            margin-top: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .btn-back, .btn-forward {
+            margin: 10px 5px 0 0;
+            display: inline-block;
+            padding: 12px 25px;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-back {
+            background-color: #6c757d;
+        }
+
+        .btn-back:hover {
+            background-color: #5a6268;
+        }
+
+        .btn-forward {
+            background-color: #e91e63;
+        }
+
+        .btn-forward:hover {
+            background-color: #ad1457;
+        }
+
+        .btn-tutorial {
+            background-color: #2196f3;
+        }
+
+        .btn-tutorial:hover {
+            background-color: #1976d2;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>OpenShift CRC Installation</h1>
+        <p><span class="highlight">CodeReady Containers (CRC)</span> brings OpenShift to your local machine for rapid development and testing. Below are the installation logs:</p>
+        
+        <pre>{{ result }}</pre>
+
+        <div class="btn-group">
+            <a class="btn-back" href="/openshift">⬅ Back to OpenShift Overview</a>
+            <a class="btn-back" href="/">🏠 Home</a>            
+            <a class="btn-forward btn-tutorial" href="/openshift/tutorials">📚 OpenShift Tutorials ➡</a>
+            <a class="btn-forward" href="/openshift/cli">Next: Using the <code>oc</code> CLI ➡</a>
+        </div>
+    </div>
+</body>
+</html>
+

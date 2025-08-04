@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>List Terraform Workspaces</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #ebf8ff;
+            padding: 40px;
+            color: #2d3748;
+        }
+        h1 {
+            color: #2b6cb0;
+        }
+        ul {
+            background: #bee3f8;
+            padding: 20px;
+            border-radius: 10px;
+            list-style-type: none;
+        }
+        li {
+            padding: 8px 0;
+            font-weight: bold;
+        }
+        .current {
+            color: #2c5282;
+        }
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            color: #2b6cb0;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>📋 List of Terraform Workspaces</h1>
+
+    {% if workspaces %}
+        <ul>
+            {% for ws in workspaces %}
+                <li class="{% if '*' in ws %}current{% endif %}">
+                    {{ ws.replace('*', '').strip() }} {% if '*' in ws %}<em>(Current)</em>{% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No workspaces found.</p>
+    {% endif %}
+
+    <a href="/terraform/workspace">← Back to Workspaces</a>
+</body>
+</html>

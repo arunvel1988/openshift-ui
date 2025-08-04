@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Terraform Workspaces Guide</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f9fafb;
+            padding: 40px;
+            color: #2d3748;
+        }
+        .top-links {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+        }
+        .top-links a {
+            margin-left: 20px;
+            text-decoration: none;
+            color: #2b6cb0;
+            font-weight: bold;
+        }
+        h1 {
+            color: #2b6cb0;
+        }
+        h2 {
+            margin-top: 30px;
+            color: #2c5282;
+        }
+        .section {
+            background: #edf2f7;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        pre {
+            background: #e2e8f0;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+        }
+        a.back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #2b6cb0;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-links">
+        <a href="/terraform/workspace/create">Create Workspace</a>
+        <a href="/terraform/workspace/delete">Delete Workspace</a>
+        <a href="/terraform/workspace/list">List Workspaces</a>
+        <a href="/terraform/workspace/deploy">Deploy App</a>
+    </div>
+
+    <h1>🌍 Terraform Workspaces</h1>
+
+    <div class="section">
+        <h2>📘 What is a Workspace?</h2>
+        <p>
+            A <strong>Terraform Workspace</strong> is a way to manage separate state files for the same configuration.
+            This is useful for managing different environments like <code>dev</code>, <code>stage</code>, and <code>prod</code> without duplicating code.
+        </p>
+    </div>
+
+    <div class="section">
+        <h2>⚙️ Common Workspace Commands</h2>
+        <pre>
+terraform workspace list           # Show available workspaces
+terraform workspace new dev        # Create a new workspace named 'dev'
+terraform workspace select dev     # Switch to 'dev' workspace
+terraform workspace delete dev     # Delete the 'dev' workspace
+        </pre>
+    </div>
+
+    <div class="section">
+        <h2>🧠 Usage Example in Code</h2>
+        <p>
+            You can dynamically use the workspace name inside your Terraform code like this:
+        </p>
+        <pre>
+resource "aws_s3_bucket" "example" {
+  bucket = "my-bucket-${terraform.workspace}"
+}
+        </pre>
+        <p>This will name the bucket differently for each workspace (e.g., <code>my-bucket-dev</code>, <code>my-bucket-prod</code>).</p>
+    </div>
+
+    <a class="back-link" href="/terraform/local/tutorials">← Back to Tutorials</a>
+</body>
+</html>

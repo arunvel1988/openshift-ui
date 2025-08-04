@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ansible Tower (AWX)</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 2rem;
+            background-color: #f9f9f9;
+        }
+        .container {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 0 8px rgba(0,0,0,0.1);
+        }
+        .btn {
+            padding: 10px 20px;
+            text-decoration: none;
+            border: 1px solid #007bff;
+            background-color: white;
+            color: #007bff;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+        .btn:hover {
+            background-color: #007bff;
+            color: white;
+        }
+        .output-box {
+            background-color: #e9ecef;
+            padding: 1rem;
+            margin-top: 1rem;
+            border-radius: 5px;
+            white-space: pre-wrap;
+        }
+        .back-links a {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 Ansible Tower (AWX)</h1>
+
+        <p>
+            <strong>AWX</strong> is the open-source version of <em>Ansible Tower</em>, a web-based UI that helps you
+            manage Ansible playbooks, inventory, and credentials.
+        </p>
+        <p>
+            This utility helps you install AWX locally using Docker Compose.
+        </p>
+
+        {% if not install_requested %}
+            <form method="post">
+                <button type="submit" class="btn">🚀 Install Ansible Tower (AWX)</button>
+            </form>
+        {% endif %}
+
+        {% if output %}
+            <div class="output-box">
+                {{ output }}
+            </div>
+
+            {% if "successfully" in output.lower() %}
+                <p>🎯 AWX should now be accessible at:</p>
+                <p>
+                    <a class="btn" href="http://localhost:8043" target="_blank">🌐 Open AWX Web UI (localhost:8043)</a>
+                </p>
+                <p>🛡️ Default login credentials:</p>
+                <ul>
+                    <li><strong>Username:</strong> admin</li>
+                    <li><strong>Password:</strong> password (default, unless changed)</li>
+                </ul>
+            {% else %}
+                <p style="margin-top: 1rem;">
+                    <a class="btn" href="/ansible/local/tower">🔁 Retry Installation</a>
+                </p>
+            {% endif %}
+        {% endif %}
+
+        <hr>
+
+        <div class="back-links">
+            <a href="/ansible/local/playbooks">← Back to Ansible Playbooks</a>
+            <a href="/">🏠 Home</a>
+        </div>
+    </div>
+</body>
+</html>

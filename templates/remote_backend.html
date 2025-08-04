@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Terraform Remote Backend</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #f4f7fa;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #2d3e50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        main {
+            max-width: 800px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        h1, h2, h3 {
+            color: #2d3e50;
+        }
+        p {
+            line-height: 1.6;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            margin: 15px 0;
+        }
+        button {
+            background-color: #0066cc;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #004999;
+        }
+        .back-button {
+            margin-top: 30px;
+            display: inline-block;
+        }
+        .icon {
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>🌍 Terraform Backends</h1>
+</header>
+
+<main>
+    <section>
+        <h2>📂 Local Backend</h2>
+        <p>Stores Terraform state on the <strong>local disk</strong>. Ideal for personal or development use. No collaboration or locking.</p>
+    </section>
+
+    <section>
+        <h2>🌐 Remote Backend</h2>
+        <p>Enables <strong>shared state, collaboration, locking, and remote operations</strong>. Recommended for teams and production use.</p>
+
+        <h3>🧩 Choose a Remote Backend:</h3>
+        <ul>
+            <li>
+                <a href="{{ url_for('start_minio') }}">
+                    <button>🚀 MinIO (S3-compatible)</button>
+                </a>
+            </li>
+            <li>
+                <button onclick="alert('📦 AWS S3 stores Terraform state securely. Requires S3 bucket, IAM role, and region.')">
+                    🌍 AWS S3
+                </button>
+            </li>
+            <li>
+                <button onclick="alert('☁️ Azure Blob is used as Terraform backend. Needs storage account, container, and access key.')">
+                    ☁️ Azure Blob
+                </button>
+            </li>
+        </ul>
+    </section>
+
+    <div class="back-button">
+        <a href="/terraform/local"><button>🔙 Back to Terraform Home</button></a>
+    </div>
+</main>
+
+</body>
+</html>

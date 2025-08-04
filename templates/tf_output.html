@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Terraform - {{ command }}</title>
+    <style>
+        body {
+            font-family: monospace;
+            background: #1e1e1e;
+            color: #00ff00;
+            padding: 20px;
+        }
+        pre {
+            background: #000;
+            padding: 15px;
+            border: 1px solid #333;
+            border-radius: 8px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+        h2 {
+            color: #00ffff;
+        }
+        .buttons {
+            margin-top: 20px;
+        }
+        .buttons button {
+            margin-right: 10px;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            background-color: #333;
+            color: #fff;
+        }
+        .buttons button:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <h2>Terraform Command: {{ command }}</h2>
+
+    {% if stderr %}
+        <h3 style="color: red;">Errors:</h3>
+        <pre>{{ stderr }}</pre>
+    {% endif %}
+
+    <h3>Output:</h3>
+    <pre>{{ stdout }}</pre>
+
+    <div class="buttons">
+        <button onclick="history.back()">⬅️ Back</button>
+        <button onclick="window.location.href='/'">🏠 Home</button>
+    </div>
+</body>
+</html>

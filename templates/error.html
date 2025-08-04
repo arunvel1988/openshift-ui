@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Error - Terraform</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #fff5f5;
+            padding: 30px;
+            color: #c53030;
+        }
+        h1 {
+            font-size: 1.8em;
+        }
+        pre {
+            background: #fef2f2;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            color: #2d3748;
+        }
+        .buttons {
+            margin-top: 20px;
+        }
+        button {
+            background: #3182ce;
+            color: white;
+            padding: 10px 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        button:hover {
+            background: #2b6cb0;
+        }
+        a {
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>❌ Terraform {{ command }} Error</h1>
+    <pre>{{ stderr }}</pre>
+
+    <div class="buttons">
+        <button onclick="history.back()">🔙 Back</button>
+        <a href="/terraform/tutorials"><button>🏠 Home</button></a>
+    </div>
+</body>
+</html>

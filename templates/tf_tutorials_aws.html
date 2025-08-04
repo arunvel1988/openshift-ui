@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Terraform Learning Hub 🌍</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f0f4f8;
+            padding: 40px;
+            color: #333;
+        }
+        h1 {
+            font-size: 2.5em;
+            color: #2a4365;
+        }
+        p {
+            font-size: 1.1em;
+            margin-bottom: 30px;
+        }
+        .module-box {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+        }
+        .module-box:hover {
+            transform: scale(1.02);
+        }
+        a.module-link {
+            text-decoration: none;
+            color: #2b6cb0;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        .buttons {
+            margin-top: 20px;
+        }
+        .buttons button {
+            background: #3182ce;
+            color: white;
+            padding: 10px 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-right: 10px;
+        }
+        .buttons button:hover {
+            background: #2b6cb0;
+        }
+        a {
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>🌍 Terraform Learning Hub</h1>
+    <p>Welcome to your hands-on Terraform journey. Explore each module below and experiment with real Terraform files 🚀</p>
+
+    {% for module in modules %}
+        <div class="module-box">
+            <a class="module-link" href="/terraform/aws/tutorials/{{ module }}/">📦 Module {{ loop.index }}: {{ module.replace('_', ' ').title() }}</a>
+        </div>
+    {% endfor %}
+
+    <div class="buttons">
+        <button onclick="history.back()">🔙 Back</button>
+        <a href="/terraform/aws"><button>🏠 Home</button></a>
+    </div>
+</body>
+</html>
+
