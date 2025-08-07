@@ -160,30 +160,76 @@ def ansible_info():
 
 
 
+
+
+from flask import render_template
+import os
+import subprocess
+import shutil
+import platform
+import psutil
+
 @app.route("/openshift/install")
 def openshift_install():
-    try:
-        output_logs = ""
-        repo_dir = "/tmp/crc_setup"
+    output_logs = ""
+    repo_dir = "/tmp/crc_setup"
+    pull_secret_filename = "pull-secret.txt"
+    pull_secret_path = os.path.abspath(pull_secret_filename)
 
-        # ✅ Check if CRC is already installed
+    try:
+        # --------------------------------------------------------
+        # 🧠 PRE-REQUISITES CHECK
+        # --------------------------------------------------------
+        output_logs += "🔍 Checking system pre-requisites...\n"
+
+        # Check OS support
+        dist_name = platform.linux_distribution()[0] if hasattr(platform, 'linux_distribution') else platform.freedesktop_os_release().get('ID', '')
+        os_supported = any(os_name in dist_name.lower() for os_name in ['rhel', 'centos', 'fedora'])
+        if not os_supported:
+            output_logs += f"⚠️ WARNING: Your OS ({dist_name}) is not officially supported. CRC supports RHEL, CentOS, Fedora.\n"
+
+        # Check CPU cores
+        cpu_count = psutil.cpu_count(logical=False)
+        if cpu_count < 4:
+            output_logs += f"❌ Insufficient CPU cores. Required: 4, Found: {cpu_count}\n"
+            return render_template("openshift_install.html", result=output_logs)
+
+        # Check RAM
+        mem_gb = psutil.virtual_memory().total / (1024 ** 3)
+        if mem_gb < 10.5:
+            output_logs += f"❌ Insufficient RAM. Required: 10.5 GB, Found: {mem_gb:.2f} GB\n"
+            return render_template("openshift_install.html", result=output_logs)
+
+        # Check Disk
+        disk_gb = shutil.disk_usage("/").free / (1024 ** 3)
+        if disk_gb < 35:
+            output_logs += f"❌ Insufficient Disk Space. Required: 35 GB, Found: {disk_gb:.2f} GB\n"
+            return render_template("openshift_install.html", result=output_logs)
+
+        output_logs += f"✅ Pre-requisites met: {cpu_count} cores, {mem_gb:.2f} GB RAM, {disk_gb:.2f} GB disk\n"
+
+        # --------------------------------------------------------
+        # 🚀 CLONE CRC SETUP REPO IF NEEDED
+        # --------------------------------------------------------
+        if not os.path.exists(repo_dir):
+            subprocess.run(["git", "clone", "https://github.com/arunvel1988/crc_setup", repo_dir], check=True)
+            output_logs += f"✅ Cloned CRC setup repo to {repo_dir}\n"
+        else:
+            output_logs += f"✅ Repo already cloned at {repo_dir}, skipping clone\n"
+
+        os.chdir(repo_dir)
+
+        # --------------------------------------------------------
+        # 🔍 Check if CRC is installed
+        # --------------------------------------------------------
         try:
-            crc_version = subprocess.check_output(["crc", "version"], stderr=subprocess.STDOUT, text=True)
+            crc_version = subprocess.check_output(["crc", "version"], text=True)
             output_logs += f"✅ CRC binary found:\n{crc_version}\n"
         except (subprocess.CalledProcessError, FileNotFoundError):
-            # 🚀 Install CRC
-            output_logs += "🚀 Starting OpenShift CRC Installation\n\n"
-
-            if not os.path.exists(repo_dir):
-                subprocess.run(["git", "clone", "https://github.com/arunvel1988/crc_setup", repo_dir], check=True)
-                output_logs += "✅ Cloned repo to /tmp/crc_setup\n"
-
-            os.chdir(repo_dir)
-
-            output_logs += "📦 Extracting CRC archive...\n"
+            # If not found, extract and move CRC binary
+            output_logs += "📦 CRC binary not found, extracting...\n"
             subprocess.run(["tar", "-xf", "crc-linux-amd64.tar.xz"], check=True)
 
-            # Find and move crc binary
             for root, dirs, files in os.walk(repo_dir):
                 if "crc" in files:
                     crc_path = os.path.join(root, "crc")
@@ -193,46 +239,44 @@ def openshift_install():
 
             subprocess.run(["sudo", "mv", crc_path, "/usr/local/bin/crc"], check=True)
             subprocess.run(["sudo", "chmod", "+x", "/usr/local/bin/crc"], check=True)
-            output_logs += "✅ CRC moved to /usr/local/bin and made executable.\n"
+            output_logs += "✅ Installed CRC binary to /usr/local/bin\n"
 
-        # 🔧 Always run crc setup
-        output_logs += "\n⚙️ Running 'crc setup'...\n"
+        # --------------------------------------------------------
+        # 🔑 Check pull-secret.txt
+        # --------------------------------------------------------
+        output_logs += f"🔍 Looking for pull-secret.txt at: {pull_secret_path}\n"
+        if not os.path.exists(pull_secret_path):
+            raise Exception("❌ Required pull-secret.txt not found in current directory.")
+        output_logs += "✅ pull-secret.txt found.\n"
+
+        # --------------------------------------------------------
+        # ⚙️ Run CRC setup
+        # --------------------------------------------------------
+        output_logs += "⚙️ Running crc setup...\n"
         setup_output = subprocess.check_output(["crc", "setup"], text=True)
         output_logs += setup_output + "\n"
 
-        # ✅ Check CRC Status
+        # --------------------------------------------------------
+        # 🚀 Start CRC
+        # --------------------------------------------------------
+        output_logs += "🚀 Starting CRC with pull-secret.txt...\n"
         try:
-            status_output = subprocess.check_output(["crc", "status"], stderr=subprocess.STDOUT, text=True)
-            output_logs += f"\n📊 CRC Status:\n{status_output}"
-
-            if "Running" in status_output:
-                output_logs += "\n✅ CRC is already running.\n"
-            else:
-                # 🔐 Start with pull-secret
-                output_logs += "\n🚀 Starting CRC using pull-secret.txt...\n"
-                pull_secret_path = os.path.join(repo_dir, "pull-secret.txt")
-                if not os.path.exists(pull_secret_path):
-                    raise Exception("❌ pull-secret.txt not found in repo directory.")
-
-                start_cmd = ["crc", "start", "--pull-secret", pull_secret_path]
-                process = subprocess.run(start_cmd, check=True, capture_output=True, text=True)
-                output_logs += f"\n🚀 crc start output:\n{process.stdout}"
-
+            start_cmd = ["crc", "start", "--pull-secret", pull_secret_path]
+            start_output = subprocess.check_output(start_cmd, text=True)
+            output_logs += start_output
         except subprocess.CalledProcessError as e:
-            output_logs += f"\n⚠️ crc status error:\n{e.output}"
+            output_logs += f"❌ crc start failed:\n{e.output}"
 
-        # 🎉 Final Version Info
-        final_version = subprocess.check_output(["crc", "version"], text=True)
-        output_logs += f"\n✅ Final CRC Version Info:\n{final_version}"
+        # --------------------------------------------------------
+        # 🎉 Final Info
+        # --------------------------------------------------------
+        final_crc_version = subprocess.check_output(["crc", "version"], text=True)
+        output_logs += f"\n✅ Final CRC Version Info:\n{final_crc_version}"
 
-    except subprocess.CalledProcessError as e:
-        output_logs += f"\n❌ Installation error:\n{e}\n\n{e.stderr if hasattr(e, 'stderr') else ''}"
-    except Exception as ex:
-        output_logs += f"\n⚠️ Unexpected error: {str(ex)}"
+    except Exception as e:
+        output_logs += f"\n⚠️ Error occurred:\n{str(e)}"
 
     return render_template("openshift_install.html", result=output_logs)
-
-
 
 
 
