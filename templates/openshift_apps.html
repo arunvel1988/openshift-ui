@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Deploying Apps in OpenShift</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #e3f2fd, #e8eaf6);
+      color: #333;
+      padding: 50px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background-color: #ffffff;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease-in-out;
+    }
+
+    .container:hover {
+      transform: scale(1.01);
+    }
+
+    h1 {
+      color: #1976d2;
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+
+    h1 span {
+      font-size: 2.8rem;
+    }
+
+    p {
+      font-size: 1.2rem;
+      line-height: 1.7;
+    }
+
+    ul, ol {
+      margin-top: 20px;
+      padding-left: 20px;
+    }
+
+    ul li, ol li {
+      margin-bottom: 12px;
+      font-size: 1.1rem;
+    }
+
+    pre {
+      background: #212121;
+      color: #f5f5f5;
+      padding: 12px;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 0.95rem;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 14px 30px;
+      font-size: 1.1rem;
+      background: linear-gradient(to right, #42a5f5, #1976d2);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      transition: background 0.3s ease;
+    }
+
+    .btn:hover {
+      background: linear-gradient(to right, #1976d2, #0d47a1);
+    }
+
+    footer {
+      margin-top: 40px;
+      font-size: 0.9rem;
+      color: #666;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1><span>🚀</span> Deploying Applications in OpenShift</h1>
+    <p>
+      OpenShift offers a robust, Kubernetes-based platform for running containerized applications.
+      Deployments in OpenShift are more than just "running containers" — they bring in features like
+      <strong>build automation</strong>, <strong>scaling</strong>, <strong>routing</strong>, and
+      <strong>integrated security</strong>.
+    </p>
+
+    <h3>Key Concepts</h3>
+    <ul>
+      <li><strong>Projects/Namespaces:</strong> Logical isolation for applications and resources.</li>
+      <li><strong>BuildConfig:</strong> Defines how source code is built into an image.</li>
+      <li><strong>DeploymentConfig / Deployment:</strong> Describes how pods are created and updated.</li>
+      <li><strong>Services:</strong> Stable network endpoints for pods.</li>
+      <li><strong>Routes:</strong> External access to services via HTTP/HTTPS.</li>
+    </ul>
+
+    <h3>Deployment Methods</h3>
+    <ol>
+      <li><strong>From Source Code:</strong> Use <code>oc new-app</code> with a Git repo to automatically build and deploy.</li>
+      <li><strong>From Container Images:</strong> Deploy prebuilt images directly from Docker Hub or an internal registry.</li>
+      <li><strong>Using Templates:</strong> Reuse pre-defined resource configurations.</li>
+      <li><strong>Helm Charts:</strong> Package and deploy complex apps with multiple components.</li>
+    </ol>
+
+    <h3>Example CLI Deployment</h3>
+    <pre>
+# Login to the cluster
+oc login --token=YOUR_TOKEN --server=https://api.cluster.example.com:6443
+
+# Create a new project
+oc new-project myapp
+
+# Deploy from source
+oc new-app https://github.com/sclorg/nodejs-ex.git
+
+# Expose the app to the internet
+oc expose svc/nodejs-ex
+
+# View the route
+oc get routes
+    </pre>
+
+    <h3>Best Practices</h3>
+    <ul>
+      <li>Keep configuration and secrets in ConfigMaps and Secrets.</li>
+      <li>Use resource limits to avoid noisy-neighbor issues.</li>
+      <li>Set readiness and liveness probes for health checks.</li>
+      <li>Automate builds and deployments with pipelines (Tekton/Jenkins).</li>
+    </ul>
+
+    <a class="btn" href="/">🏠 Back to Home</a>
+    <a class="btn" href="/openshift">🔙 Back to OpenShift</a>
+  </div>
+
+  <footer>
+    Built for OpenShift learners
+  </footer>
+</body>
+</html>
+

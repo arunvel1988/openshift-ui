@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>OpenShift Storage</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #f9f9f9, #e3f2fd);
+      color: #333;
+      padding: 50px;
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #0d47a1;
+    }
+    p {
+      font-size: 1.1em;
+      line-height: 1.6;
+    }
+    ul {
+      margin-top: 15px;
+    }
+    button {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: #0d47a1;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1em;
+    }
+    button:hover {
+      background: #1565c0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>OpenShift Storage</h1>
+    <p>
+      In OpenShift, storage is essential for running applications that need to preserve data beyond the lifecycle of a container. 
+      Kubernetes and OpenShift provide a range of storage solutions for different use cases.
+    </p>
+    <p><strong>Key Storage Types in OpenShift:</strong></p>
+    <ul>
+      <li><strong>Ephemeral Storage:</strong> Temporary storage tied to the pod's lifecycle; data is lost when the pod is deleted.</li>
+      <li><strong>Persistent Volumes (PVs):</strong> Storage resources in the cluster that can be dynamically or statically provisioned.</li>
+      <li><strong>Persistent Volume Claims (PVCs):</strong> Requests for storage by users; PVCs bind to PVs.</li>
+      <li><strong>Storage Classes:</strong> Define different types of storage with parameters like performance or replication.</li>
+      <li><strong>Dynamic Provisioning:</strong> Automatically creates PVs when PVCs are requested.</li>
+    </ul>
+    <p>
+      Storage in OpenShift can come from cloud providers (AWS EBS, Azure Disk, GCP Persistent Disk) or on-premises solutions 
+      like NFS, Ceph, or GlusterFS.
+    </p>
+    <div style="text-align:center;">
+      <button onclick="window.location.href='/'">🏠 Home</button>
+      <button onclick="window.location.href='/openshift'">⬅ Back to OpenShift</button>
+    </div>
+  </div>
+</body>
+</html>
+

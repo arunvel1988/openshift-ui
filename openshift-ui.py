@@ -162,7 +162,7 @@ def ansible_info():
 
 
 
-from flask import render_template
+from flask import render_template, request
 import os
 import subprocess
 import shutil
@@ -261,7 +261,7 @@ def openshift_install():
         # --------------------------------------------------------
         output_logs += "🚀 Starting CRC with pull-secret.txt...\n"
         try:
-            start_cmd = ["crc", "start", "--pull-secret", pull_secret_path]
+            start_cmd = ["crc", "start"]
             start_output = subprocess.check_output(start_cmd, text=True)
             output_logs += start_output
         except subprocess.CalledProcessError as e:
@@ -281,85 +281,117 @@ def openshift_install():
 
 
 
+@app.route("/openshift/cli")
+def openshift_cli():
+    # Check if 'oc' CLI exists in PATH
+    oc_path = shutil.which("oc")
+
+    # If installed, try to get version
+    oc_version = None
+    if oc_path:
+        try:
+            result = subprocess.run(
+                ["oc", "version", "--client=true"],
+                capture_output=True,
+                text=True,
+                check=True
+            )
+            oc_version = result.stdout.strip()
+        except subprocess.CalledProcessError:
+            oc_version = "Unable to get version"
+
+    return render_template(
+        "openshift_cli.html",
+        oc_path=oc_path,
+        oc_version=oc_version
+    )
 
 
-####################terraform basics ###########################################
+@app.route("/openshift/apps")
+def openshift_apps():
+    return render_template("openshift_apps.html")
+    
+@app.route("/openshift/storage")
+def openshift_storage():
+    return render_template("openshift_storage.html")
+
+@app.route("/openshift/security")
+def openshift_security():
+    try:
+        return render_template("openshift_security.html")
+    except Exception as e:
+        return f"Error loading page: {e}", 500
+
+@app.route("/openshift/gitops")
+def openshift_gitops():
+    try:
+        return render_template("openshift_gitops.html")
+    except Exception as e:
+        return f"Error loading GitOps page: {e}", 500
+
+
+####################oc cli ###########################################
+
+
+
 
 
 import os
+from flask import render_template, request
 import subprocess
-from flask import Flask, render_template, request
 
+OPENSHIFT_BASE = os.path.abspath("openshift")  # folder where YAMLs are stored
 
-
-@app.route("/terraform/local/tutorials", methods=["GET"])
-def terraform_tutorials():
+@app.route("/openshift/local/tutorials", methods=["GET"])
+def openshift_tutorials():
     try:
-        modules = sorted(os.listdir(TERRAFORM_BASE))
-        return render_template("tf_tutorials.html", modules=modules)
+        modules = sorted(os.listdir(OPENSHIFT_BASE))
+        return render_template("oc_tutorials.html", modules=modules)
     except Exception as e:
-        return f"<pre>❌ Error loading tutorials: {str(e)}</pre>"
+        return f"<pre>❌ Error loading OpenShift YAML tutorials: {str(e)}</pre>"
 
-
-TERRAFORM_BASE = os.path.abspath("terraform")
-
-
-
-@app.route("/terraform/local/tutorials/<module>/", methods=["GET"])
-def preview_module(module):
-    module_path = os.path.join(TERRAFORM_BASE, module)
+@app.route("/openshift/local/tutorials/<module>/", methods=["GET"])
+def preview_openshift_yaml(module):
+    module_path = os.path.join(OPENSHIFT_BASE, module)
 
     try:
-        main_tf = os.path.join(module_path, "main.tf")
-        tfvars = os.path.join(module_path, "terraform.tfvars")
+        yaml_files = [f for f in os.listdir(module_path) if f.endswith(".yaml") or f.endswith(".yml")]
+        if not yaml_files:
+            return f"<pre>❌ No YAML files found in {module}</pre>"
 
-        if not os.path.exists(main_tf):
-            return f"<pre>❌ main.tf not found in {module}</pre>"
+        file_contents = {}
+        for yf in yaml_files:
+            file_contents[yf] = open(os.path.join(module_path, yf)).read()
 
-        main_content = open(main_tf).read()
-        var_content = open(tfvars).read() if os.path.exists(tfvars) else "No terraform.tfvars found."
-
-        return render_template("tf_preview.html", module=module, main_tf=main_content, tfvars=var_content)
+        return render_template("oc_preview.html", module=module, yaml_files=file_contents)
 
     except Exception as e:
         return f"<pre>❌ Error: {str(e)}</pre>"
 
-
-@app.route("/terraform/local/tutorials/<module>/<command>", methods=["POST"])
-def run_terraform_command(module, command):
-    module_path = os.path.join(TERRAFORM_BASE, module)
+@app.route("/openshift/local/tutorials/<module>/<command>", methods=["POST"])
+def run_oc_command(module, command):
+    module_path = os.path.join(OPENSHIFT_BASE, module)
 
     if not os.path.isdir(module_path):
         return f"<pre>❌ Module not found: {module_path}</pre>", 404
 
-    os.chdir(module_path)
-
-    # Whitelisted terraform commands
+    # Whitelisted oc commands
     valid_commands = {
-        "plan": ["terraform", "plan"],
-        "apply": ["terraform", "apply", "-auto-approve"],
-        "destroy": ["terraform", "destroy", "-auto-approve"],
-        "show": ["terraform", "show"],
-        "output": ["terraform", "output"],
-        "validate": ["terraform", "validate"],
-        "fmt": ["terraform", "fmt"]
+        "apply": ["oc", "apply", "-f", module_path],
+        "delete": ["oc", "delete", "-f", module_path],
+        "get": ["oc", "get", "-f", module_path, "-o", "yaml"],
+        "describe": ["oc", "describe", "-f", module_path]
     }
 
     if command not in valid_commands:
         return f"<pre>❌ Unsupported command: {command}</pre>", 400
 
     try:
-        # Always init first
-        subprocess.run(["terraform", "init", "-input=false"], check=True, capture_output=True, text=True)
-
-        # Run the actual command
         result = subprocess.run(valid_commands[command], capture_output=True, text=True)
-
-        return render_template("tf_output.html",
+        return render_template("oc_output.html",
                                command=f"{command}: {module}",
                                stdout=result.stdout,
                                stderr=result.stderr)
-
     except subprocess.CalledProcessError as e:
         return render_template("error.html", command=command, stderr=e.stderr), 500
 

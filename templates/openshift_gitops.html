@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>OpenShift GitOps & Pipelines</title>
+    <style>
+        body {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, #f0f7ff, #e6f2ff);
+            color: #333;
+            padding: 50px;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: #fff;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #0056b3;
+        }
+        h2 {
+            color: #0073e6;
+        }
+        p {
+            line-height: 1.6;
+        }
+        a {
+            text-decoration: none;
+            color: white;
+            background: #0056b3;
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin: 5px;
+            display: inline-block;
+        }
+        a:hover {
+            background: #003d80;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>OpenShift GitOps & Pipelines</h1>
+
+        <h2>1. What is OpenShift GitOps?</h2>
+        <p>
+            OpenShift GitOps is based on <strong>Argo CD</strong> and provides a way to manage 
+            Kubernetes and OpenShift clusters declaratively using Git as the single source of truth.  
+            Your application manifests, Helm charts, and configurations live in a Git repository.  
+            GitOps automatically syncs the live environment with what’s in Git, ensuring configuration drift is avoided.
+        </p>
+
+        <h3>Key Benefits:</h3>
+        <ul>
+            <li>Version-controlled deployments</li>
+            <li>Rollback capability to previous Git commits</li>
+            <li>Cluster-wide visibility with Argo CD UI</li>
+            <li>Secure, auditable deployments</li>
+        </ul>
+
+        <h2>2. How GitOps Works in OpenShift</h2>
+        <p>
+            - Define app configs in Git (YAML/Helm)<br>
+            - Argo CD watches Git for changes<br>
+            - Changes automatically sync to the OpenShift cluster<br>
+            - Status & health monitored via Argo CD dashboard
+        </p>
+
+        <h2>3. OpenShift Pipelines</h2>
+        <p>
+            OpenShift Pipelines is based on <strong>Tekton</strong> and provides a Kubernetes-native CI/CD framework.
+            It allows you to build, test, and deploy applications using custom-defined pipelines directly inside your cluster.
+        </p>
+
+        <h3>Pipeline Components:</h3>
+        <ul>
+            <li><b>Tasks:</b> Steps in a CI/CD process</li>
+            <li><b>Pipelines:</b> Ordered execution of tasks</li>
+            <li><b>PipelineRuns:</b> Execution instances of pipelines</li>
+            <li><b>Triggers:</b> Automatically start pipelines on Git push/merge</li>
+        </ul>
+
+        <h3>GitOps + Pipelines Integration:</h3>
+        <p>
+            - Pipelines build & push new container images<br>
+            - Update manifests in Git<br>
+            - GitOps detects the change and deploys automatically
+        </p>
+
+        <a href="/">Home</a>
+        <a href="/openshift">Back to OpenShift</a>
+    </div>
+</body>
+</html>
+

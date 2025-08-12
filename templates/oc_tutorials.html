@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>OpenShift CLI</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #e3f2fd, #e8eaf6);
+      color: #333;
+      padding: 50px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background-color: #ffffff;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease-in-out;
+    }
+
+    .container:hover {
+      transform: scale(1.01);
+    }
+
+    h1 {
+      color: #d32f2f;
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+
+    h1 span {
+      font-size: 2.8rem;
+    }
+
+    p {
+      font-size: 1.2rem;
+      line-height: 1.7;
+    }
+
+    ul {
+      margin-top: 20px;
+      padding-left: 20px;
+    }
+
+    ul li {
+      margin-bottom: 12px;
+      font-size: 1.1rem;
+    }
+
+    pre {
+      background: #212121;
+      color: #f5f5f5;
+      padding: 12px;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 0.95rem;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 14px 30px;
+      font-size: 1.1rem;
+      background: linear-gradient(to right, #ef5350, #d32f2f);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      transition: background 0.3s ease;
+    }
+
+    .btn:hover {
+      background: linear-gradient(to right, #d32f2f, #b71c1c);
+    }
+
+    .link-docs {
+      display: inline-block;
+      margin-top: 20px;
+      color: #d32f2f;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .link-docs:hover {
+      text-decoration: underline;
+    }
+
+    .emoji {
+      font-size: 1.4rem;
+    }
+
+    footer {
+      margin-top: 40px;
+      font-size: 0.9rem;
+      color: #666;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1><span>💻</span> OpenShift <code>oc</code> CLI</h1>
+    <p>The <strong>oc</strong> CLI is the official OpenShift command-line tool. It’s like <code>kubectl</code>, but with extra features for OpenShift-specific tasks like builds, routes, projects, and more.</p>
+
+    {% if oc_path %}
+      <p>✅ <strong>Installed</strong> at: <code>{{ oc_path }}</code></p>
+    {% else %}
+      <p>⚠️ <strong>Not installed</strong> on this system.</p>
+    {% endif %}
+
+    <h3>Why use <code>oc</code>?</h3>
+    <ul>
+      <li>📦 Deploy apps with <code>oc new-app</code> or YAML manifests</li>
+      <li>⚙️ Manage OpenShift-specific resources (BuildConfigs, Routes, etc.)</li>
+      <li>🔐 Control user permissions, secrets, and SCCs</li>
+      <li>📊 View cluster metrics, logs, and events</li>
+    </ul>
+
+    <h3>Install Instructions</h3>
+    <ul>
+      <li>Linux: <a href="https://mirror.openshift.com/pub/openshift-v4/clients/oc/latest/linux/oc.tar.gz" target="_blank">Download tar.gz</a></li>
+      <li>macOS: <code>brew install openshift-cli</code></li>
+      <li>Windows: <a href="https://mirror.openshift.com/pub/openshift-v4/clients/oc/latest/windows/oc.zip" target="_blank">Download ZIP</a></li>
+    </ul>
+
+    <h3>Manual Linux Install</h3>
+    <pre>
+curl -LO "https://mirror.openshift.com/pub/openshift-v4/clients/oc/latest/linux/oc.tar.gz"
+tar -xvf oc.tar.gz
+sudo mv oc /usr/local/bin/
+sudo chmod +x /usr/local/bin/oc
+oc version
+    </pre>
+
+    <a class="link-docs" href="https://docs.openshift.com/container-platform/latest/cli_reference/openshift_cli/getting-started-cli.html" target="_blank">📖 Official oc CLI Docs</a><br>
+
+    {% if not oc_path %}
+      <a class="btn" href="/openshift/install-cli">⬇️ Install oc CLI (Linux)</a>
+    {% endif %}
+    <a class="btn back-btn" href="/">⬅️ Back to Home</a>
+    <a class="btn back-btn" href="/openshift">⬅️ Back to Openshift</a>
+  </div>
+
+  <footer>
+    Built for OpenShift learners
+  </footer>
+</body>
+</html>
+
